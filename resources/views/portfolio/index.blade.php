@@ -25,13 +25,19 @@
             overflow-x: hidden;
         }
         
-        /* Perfect Spacing System */
+        /* Perfect Spacing System - Ultra Rapih */
         .container-custom {
             max-width: 1280px;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (min-width: 640px) {
+            .container-custom {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
         }
         @media (min-width: 768px) {
             .container-custom {
@@ -40,6 +46,12 @@
             }
         }
         @media (min-width: 1024px) {
+            .container-custom {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        }
+        @media (min-width: 1280px) {
             .container-custom {
                 padding-left: 3rem;
                 padding-right: 3rem;
@@ -73,13 +85,7 @@
             box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
         }
         
-        /* Gradient Text */
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        /* Gradient Text - Removed (moved to shimmer section) */
         
         /* Gradient Border - Perfect */
         .gradient-border {
@@ -110,10 +116,11 @@
             animation: float 6s ease-in-out infinite;
         }
         
-        /* Profile Image Hover - KEREN! */
+        /* Profile Image Hover - SUPER KEREN! */
         .profile-image-container {
             position: relative;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
         }
         .profile-image-container:hover {
             transform: scale(1.05) rotate(2deg);
@@ -121,21 +128,45 @@
         .profile-image-container::before {
             content: '';
             position: absolute;
-            inset: -4px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            inset: -8px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 200%;
             border-radius: inherit;
             opacity: 0;
             transition: opacity 0.5s ease;
             z-index: -1;
-            filter: blur(20px);
+            filter: blur(25px);
+            animation: gradientShift 3s ease infinite;
         }
         .profile-image-container:hover::before {
-            opacity: 0.8;
-            animation: pulse 2s ease-in-out infinite;
+            opacity: 0.9;
+            animation: gradientShift 3s ease infinite, pulse 2s ease-in-out infinite;
+        }
+        .profile-image-container::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+            animation: rotate 4s linear infinite;
+        }
+        .profile-image-container:hover::after {
+            opacity: 1;
         }
         @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 0.4; }
+            0%, 100% { opacity: 0.9; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* Skill Icon Hover */
@@ -167,6 +198,64 @@
         }
         .fade-in-up {
             animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Text Shimmer Effect */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        /* Slide In Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Bounce In */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
         
         /* Button Hover Effect */
@@ -262,92 +351,115 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Premium Modern -->
+    <!-- Hero Section - Premium Modern with Typing Animation -->
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div class="container-custom w-full">
-        <!-- Animated Background Elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl float-animation"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
-        </div>
+        <div class="container-custom w-full py-12 md:py-16 lg:py-20">
+            <!-- Animated Background Elements -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl float-animation"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+            </div>
 
             <div class="relative z-10">
-                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <!-- Left Content -->
-                <div class="text-center lg:text-left" data-aos="fade-right">
-                    <div class="inline-block mb-6">
-                        <span class="px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/30 text-sm font-medium backdrop-blur-sm">
-                            👋 Welcome to my portfolio
-                        </span>
-                    </div>
-                    
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                        <span class="block text-white">{{ $settings['hero_title'] ?? "Hi, I'm a Developer" }}</span>
-                        <span class="block gradient-text mt-2">Building Digital</span>
-                        <span class="block gradient-text">Experiences</span>
-                    </h1>
-                    
-                    <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                        {{ $settings['hero_subtitle'] ?? 'Full Stack Developer specializing in creating beautiful, functional, and user-friendly applications.' }}
-                    </p>
-                    
-                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
-                        <a href="#projects" class="group px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl font-semibold hover:from-violet-500 hover:to-indigo-500 transition-all duration-300 glow-effect flex items-center gap-2 btn-hover">
-                            <span>View Projects</span>
-                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                        </a>
-                        @if($settings['cv_file'])
-                        <a href="{{ route('cv.download') }}" class="px-8 py-4 rounded-2xl font-semibold border-2 border-white/10 hover:border-violet-500/50 hover:bg-white/5 transition-all duration-300 backdrop-blur-sm flex items-center gap-2 btn-hover">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span>Download CV</span>
-                        </a>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- Right Content - Profile Image dengan Hover Keren -->
-                <div class="flex justify-center lg:justify-end" data-aos="fade-left" data-aos-delay="200">
-                    <div class="relative">
-                        <!-- Animated Glow Background -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-                        
-                        <!-- Image Container dengan Hover Effect -->
-                        <div class="profile-image-container relative w-72 h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden border-4 border-white/10 shadow-2xl cursor-pointer">
-                            @if($settings['profile_image'])
-                                <img src="{{ Storage::url($settings['profile_image']) }}" alt="Profile" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
-                            @else
-                                <div class="w-full h-full bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
-                                    <svg class="w-32 h-32 md:w-40 md:h-40 text-white/50" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
-                            @endif
-                            
-                            <!-- Overlay Gradient on Hover -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-violet-600/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center">
+                    <!-- Left Content - Text dengan Spacing Rapih -->
+                    <div class="text-center lg:text-left px-4 md:px-6 lg:px-0" data-aos="fade-right">
+                        <!-- Welcome Badge -->
+                        <div class="inline-block mb-6 md:mb-8">
+                            <span class="px-5 py-2.5 rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/30 text-sm md:text-base font-medium backdrop-blur-sm inline-flex items-center gap-2">
+                                <span class="text-2xl">👋</span>
+                                <span>Welcome to my portfolio</span>
+                            </span>
                         </div>
-
-                        <!-- Decorative Floating Elements -->
-                        <div class="absolute -top-6 -right-6 w-28 h-28 bg-violet-600/30 rounded-full blur-2xl float-animation"></div>
-                        <div class="absolute -bottom-6 -left-6 w-36 h-36 bg-indigo-600/30 rounded-full blur-2xl float-animation" style="animation-delay: 2s;"></div>
                         
-                        <!-- Rotating Ring -->
-                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-violet-500/20 animate-spin" style="animation-duration: 20s;"></div>
+                        <!-- Main Heading dengan Typing Effect -->
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight">
+                            <span class="block text-white mb-2">Hi, I'm</span>
+                            <span class="block gradient-text mb-2" id="typing-name">Abdurrohman</span>
+                            <span class="block text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-2">a</span>
+                            <span class="block gradient-text" id="typing-role">Full Stack Developer</span>
+                        </h1>
+                        
+                        <!-- Subtitle dengan Typing Effect -->
+                        <div class="mb-10 md:mb-12">
+                            <p class="text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 min-h-[4rem] md:min-h-[5rem]" id="typing-subtitle">
+                                {{ $settings['hero_subtitle'] ?? 'Creating modern web & mobile apps with Laravel, Dart, Flutter, Tailwind, and JavaScript.' }}
+                            </p>
+                        </div>
+                        
+                        <!-- CTA Buttons dengan Spacing Rapih -->
+                        <div class="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-5 justify-center lg:justify-start">
+                            <a href="#projects" class="group px-8 md:px-10 py-4 md:py-5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl font-semibold text-base md:text-lg hover:from-violet-500 hover:to-indigo-500 transition-all duration-300 glow-effect flex items-center justify-center gap-3 btn-hover">
+                                <span>View Projects</span>
+                                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                            @if($settings['cv_file'])
+                            <a href="{{ route('cv.download') }}" class="px-8 md:px-10 py-4 md:py-5 rounded-2xl font-semibold text-base md:text-lg border-2 border-white/10 hover:border-violet-500/50 hover:bg-white/5 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-3 btn-hover">
+                                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <span>Download CV</span>
+                            </a>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Profile Image dengan Hover Effect Keren -->
+                    <div class="flex justify-center lg:justify-end px-4 md:px-6 lg:px-0" data-aos="fade-left" data-aos-delay="200">
+                        <div class="relative w-full max-w-md lg:max-w-lg">
+                            <!-- Animated Glow Background -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                            
+                            <!-- Image Container dengan Hover Effect Premium -->
+                            <div class="profile-image-container relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] mx-auto rounded-full overflow-hidden border-4 border-white/10 shadow-2xl cursor-pointer">
+                                @if($settings['profile_image'])
+                                    <img src="{{ Storage::url($settings['profile_image']) }}" alt="Profile" class="w-full h-full object-cover transition-all duration-700 hover:scale-110 hover:rotate-2">
+                                @else
+                                    <div class="w-full h-full bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
+                                        <svg class="w-32 h-32 md:w-40 md:h-40 text-white/50" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                @endif
+                                
+                                <!-- Overlay Gradient on Hover -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-violet-600/30 via-transparent to-indigo-600/30 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                                
+                                <!-- Hover Info Overlay -->
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 bg-slate-900/80 backdrop-blur-sm">
+                                    <div class="text-center p-6">
+                                        <p class="text-white text-xl md:text-2xl font-bold mb-2">Let's Connect!</p>
+                                        <p class="text-gray-300 text-sm md:text-base">Click to view more</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Decorative Floating Elements -->
+                            <div class="absolute -top-6 -right-6 w-24 h-24 md:w-28 md:h-28 bg-violet-600/30 rounded-full blur-2xl float-animation"></div>
+                            <div class="absolute -bottom-6 -left-6 w-28 h-28 md:w-36 md:h-36 bg-indigo-600/30 rounded-full blur-2xl float-animation" style="animation-delay: 2s;"></div>
+                            
+                            <!-- Rotating Ring -->
+                            <div class="absolute inset-0 rounded-full border-2 border-dashed border-violet-500/20 animate-spin pointer-events-none" style="animation-duration: 20s;"></div>
+                            
+                            <!-- Orbiting Dots -->
+                            <div class="absolute top-1/4 -left-4 w-4 h-4 bg-violet-500 rounded-full animate-ping"></div>
+                            <div class="absolute bottom-1/4 -right-4 w-3 h-3 bg-indigo-500 rounded-full animate-ping" style="animation-delay: 1s;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <div class="flex flex-col items-center gap-2">
+                    <span class="text-gray-400 text-xs md:text-sm font-medium">Scroll Down</span>
+                    <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -879,6 +991,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize AOS
         AOS.init({
             duration: 800,
             once: true,
@@ -899,6 +1012,315 @@
                 mobileMenu.classList.add('hidden');
             });
         });
+
+        // ============================================
+        // TYPING ANIMATION - KEREN & SMOOTH
+        // ============================================
+        
+        class TypeWriter {
+            constructor(element, words, wait = 3000) {
+                this.element = element;
+                this.words = words;
+                this.text = '';
+                this.wordIndex = 0;
+                this.wait = parseInt(wait, 10);
+                this.isDeleting = false;
+                this.type();
+            }
+
+            type() {
+                const current = this.wordIndex % this.words.length;
+                const fullText = this.words[current];
+
+                if (this.isDeleting) {
+                    this.text = fullText.substring(0, this.text.length - 1);
+                } else {
+                    this.text = fullText.substring(0, this.text.length + 1);
+                }
+
+                this.element.innerHTML = `<span class="typing-text">${this.text}</span><span class="typing-cursor">|</span>`;
+
+                let typeSpeed = this.isDeleting ? 50 : 100;
+
+                if (!this.isDeleting && this.text === fullText) {
+                    typeSpeed = this.wait;
+                    this.isDeleting = true;
+                } else if (this.isDeleting && this.text === '') {
+                    this.isDeleting = false;
+                    this.wordIndex++;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(() => this.type(), typeSpeed);
+            }
+        }
+
+        // Typing Animation untuk Role
+        document.addEventListener('DOMContentLoaded', () => {
+            const roleElement = document.getElementById('typing-role');
+            if (roleElement) {
+                const roles = [
+                    'Full Stack Developer',
+                    'Laravel Expert',
+                    'Flutter Developer',
+                    'UI/UX Enthusiast',
+                    'Problem Solver'
+                ];
+                new TypeWriter(roleElement, roles, 2000);
+            }
+
+            // Typing Animation untuk Subtitle (sekali saja)
+            const subtitleElement = document.getElementById('typing-subtitle');
+            if (subtitleElement) {
+                const originalText = subtitleElement.textContent;
+                subtitleElement.textContent = '';
+                let charIndex = 0;
+
+                function typeSubtitle() {
+                    if (charIndex < originalText.length) {
+                        subtitleElement.textContent += originalText.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeSubtitle, 30);
+                    }
+                }
+
+                setTimeout(typeSubtitle, 500);
+            }
+        });
+
+        // ============================================
+        // PROFILE IMAGE PARALLAX EFFECT
+        // ============================================
+        
+        const profileContainer = document.querySelector('.profile-image-container');
+        if (profileContainer) {
+            profileContainer.addEventListener('mousemove', (e) => {
+                const rect = profileContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                profileContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+
+            profileContainer.addEventListener('mouseleave', () => {
+                profileContainer.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        }
+
+        // ============================================
+        // SMOOTH SCROLL WITH OFFSET
+        // ============================================
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ============================================
+        // NAVBAR BACKGROUND ON SCROLL
+        // ============================================
+        
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-slate-900/90');
+                navbar.classList.remove('bg-slate-900/70');
+            } else {
+                navbar.classList.add('bg-slate-900/70');
+                navbar.classList.remove('bg-slate-900/90');
+            }
+        });
+
+        // ============================================
+        // CURSOR TRAIL EFFECT (Optional - Keren!)
+        // ============================================
+        
+        const createCursorTrail = () => {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.cssText = `
+                position: fixed;
+                width: 8px;
+                height: 8px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0.6;
+                transition: opacity 0.3s ease;
+            `;
+            document.body.appendChild(trail);
+
+            let mouseX = 0, mouseY = 0;
+            let trailX = 0, trailY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animate() {
+                trailX += (mouseX - trailX) * 0.1;
+                trailY += (mouseY - trailY) * 0.1;
+                
+                trail.style.left = trailX + 'px';
+                trail.style.top = trailY + 'px';
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        };
+
+        // Uncomment untuk mengaktifkan cursor trail
+        // createCursorTrail();
+
+        // ============================================
+        // PARTICLE BACKGROUND (Optional)
+        // ============================================
+        
+        const createParticles = () => {
+            const heroSection = document.getElementById('home');
+            if (!heroSection) return;
+
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 4 + 2}px;
+                    height: ${Math.random() * 4 + 2}px;
+                    background: rgba(139, 92, 246, ${Math.random() * 0.5 + 0.2});
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    pointer-events: none;
+                    animation: float ${Math.random() * 10 + 5}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 5}s;
+                `;
+                heroSection.appendChild(particle);
+            }
+        };
+
+        // Uncomment untuk mengaktifkan particles
+        // createParticles();
+
+        // ============================================
+        // SCROLL REVEAL COUNTER ANIMATION
+        // ============================================
+        
+        const animateCounter = (element, target, duration = 2000) => {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start);
+                }
+            }, 16);
+        };
+
+        // Observer untuk trigger animasi saat element terlihat
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe semua card elements
+        document.querySelectorAll('.card-hover').forEach(card => {
+            observer.observe(card);
+        });
+
+        // ============================================
+        // CONSOLE MESSAGE (Fun Easter Egg!)
+        // ============================================
+        
+        console.log('%c👋 Hello Developer!', 'color: #667eea; font-size: 24px; font-weight: bold;');
+        console.log('%cLooking for something? Feel free to reach out!', 'color: #764ba2; font-size: 14px;');
+        console.log('%c💼 Portfolio built with Laravel & Tailwind CSS', 'color: #8b5cf6; font-size: 12px;');
     </script>
+
+    <style>
+        /* Typing Cursor Animation */
+        .typing-cursor {
+            animation: blink 0.7s infinite;
+            color: #8b5cf6;
+            font-weight: 300;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Smooth Transitions */
+        .profile-image-container {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Card Animation */
+        .card-hover {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced Glow on Hover */
+        .glow-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .glow-effect:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
 </body>
 </html>
