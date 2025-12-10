@@ -770,10 +770,10 @@
                     Career Journey
                 </span>
                 <h2 class="text-4xl md:text-5xl font-bold mb-4">
-                    <span class="gradient-text">Work Experience</span>
+                    <span class="gradient-text">Experience</span>
                 </h2>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                    My professional journey and achievements
+                    My journey and achievements
                 </p>
             </div>
 
@@ -846,7 +846,7 @@
                     <span class="gradient-text">Featured Projects</span>
                 </h2>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                    Showcasing my best work and creative solutions
+                    Showcasing my Project and creative solutions
                 </p>
             </div>
 
@@ -936,8 +936,7 @@
                     <span class="gradient-text">Certificates & Awards</span>
                 </h2>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                    Professional certifications and recognitions
-                </p>
+Certificates and Achievements                 </p>
             </div>
 
             <!-- Certificates Grid -->
