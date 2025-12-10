@@ -304,35 +304,82 @@
                 transform: translateY(0px) rotate(0deg);
             }
             25% {
-                transform: translateY(-10px) rotate(2deg);
+                transform: translateY(-8px) rotate(1deg);
             }
             50% {
-                transform: translateY(-15px) rotate(0deg);
+                transform: translateY(-12px) rotate(0deg);
             }
             75% {
-                transform: translateY(-10px) rotate(-2deg);
+                transform: translateY(-8px) rotate(-1deg);
             }
         }
         
-        /* About Image Container - Tilt on Hover */
-        .about-image-container {
+        /* Subtle Glow Animation */
+        @keyframes subtle-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+            }
+        }
+        
+        /* About Image Circular - Smooth Animations */
+        .about-image-circular {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
+            position: relative;
+            animation: float-gentle 8s ease-in-out infinite;
         }
         
-        .about-image-container:hover {
-            transform: scale(1.05) rotateY(5deg) rotateX(5deg);
+        .about-image-circular:hover {
+            transform: scale(1.08) translateY(-10px);
             box-shadow: 
-                0 25px 50px rgba(102, 126, 234, 0.3),
-                0 0 50px rgba(6, 182, 212, 0.2);
+                0 25px 50px rgba(102, 126, 234, 0.4),
+                0 0 80px rgba(6, 182, 212, 0.3);
+            animation-play-state: paused;
         }
         
-        .about-image-container img {
-            transition: transform 0.7s ease;
+        .about-image-circular img {
+            transition: transform 0.6s ease;
         }
         
-        .about-image-container:hover img {
-            transform: scale(1.1);
+        .about-image-circular:hover img {
+            transform: scale(1.12);
+        }
+        
+        /* About Text Container - Matching Style */
+        .about-text-container {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .about-text-container:hover {
+            transform: translateY(-8px);
+        }
+        
+        /* Clean Container Spacing */
+        .container-custom {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* About Section Specific Spacing */
+        #about .container-custom {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            #about .container-custom {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            #about .container-custom {
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
         }
         
         /* Particles */
@@ -460,16 +507,46 @@
                 overflow-x: hidden !important;
             }
             
-            .about-image-container {
-                max-width: 100% !important;
+            .about-image-circular {
+                width: 200px !important;
+                height: 200px !important;
+            }
+        }
+        
+        /* Mobile Specific */
+        @media (max-width: 640px) {
+            .about-image-circular {
+                width: 180px !important;
+                height: 180px !important;
+            }
+            
+            #about .grid {
+                gap: 2rem !important;
+            }
+            
+            #about .container-custom {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
             }
         }
         
         /* Tablet Specific */
-        @media (min-width: 768px) and (max-width: 1023px) {
+        @media (min-width: 641px) and (max-width: 1023px) {
             .container-custom {
                 padding-left: 1.5rem !important;
                 padding-right: 1.5rem !important;
+            }
+            
+            .about-image-circular {
+                width: 240px !important;
+                height: 240px !important;
+            }
+        }
+        
+        /* Desktop Fine-tuning */
+        @media (min-width: 1024px) {
+            #about .grid {
+                align-items: center;
             }
         }
         
@@ -633,60 +710,77 @@
         </div>
     </section>
 
-    <!-- About Section - With Image on Left -->
+    <!-- About Section - Clean Layout with Circular Image -->
     @if($settings['about_description'])
-    <section id="about" class="py-20 md:py-28 lg:py-32 relative overflow-hidden">
-        <div class="container-custom">
+    <section id="about" class="py-16 md:py-20 lg:py-24 relative overflow-hidden">
+        <div class="container-custom max-w-6xl">
             <!-- Section Header -->
-            <div class="text-center mb-16" data-aos="fade-up">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <span class="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/30 text-sm font-medium mb-4">
                     About Me
                 </span>
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">
-                    <span class="gradient-text">{{ $settings['about_title'] ?? 'Get to Know Me' }}</span>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                    <span class="gradient-text">About Me</span>
                 </h2>
             </div>
 
-            <!-- Content with Image -->
-            <div class="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-                <!-- Left Side - Profile Image (Always First) -->
-                <div data-aos="fade-right">
-                    <div class="relative max-w-md mx-auto lg:ml-0">
-                        <!-- Animated Glow Background -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
+            <!-- Content with Circular Image -->
+            <div class="grid lg:grid-cols-5 gap-8 md:gap-10 lg:gap-12 items-center">
+                <!-- Left Side - Circular Profile Image -->
+                <div class="lg:col-span-2 flex justify-center lg:justify-start" data-aos="fade-right">
+                    <div class="relative">
+                        <!-- Glow Background -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-violet-600/30 to-cyan-500/30 rounded-full blur-2xl animate-pulse"></div>
                         
-                        <!-- Image Container with Hover Animation -->
-                        <div class="about-image-container relative rounded-3xl overflow-hidden border-4 border-white/10 shadow-2xl">
+                        <!-- Circular Image Container -->
+                        <div class="about-image-circular relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
                             @if($settings['profile_image'])
-                                <img src="{{ Storage::url($settings['profile_image']) }}" alt="About Me" class="w-full h-auto object-cover transition-transform duration-700">
+                                <img src="{{ Storage::url($settings['profile_image']) }}" alt="About Me" class="w-full h-full object-cover transition-transform duration-700">
                             @else
-                                <div class="w-full aspect-square bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center">
-                                    <svg class="w-32 h-32 text-white/50" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="w-full h-full bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center">
+                                    <svg class="w-24 h-24 md:w-32 md:h-32 text-white/50" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
                             @endif
                             
-                            <!-- Overlay on Hover -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-violet-600/30 via-transparent to-cyan-500/30 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-violet-600/20 via-transparent to-cyan-500/20 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
 
-                        <!-- Decorative Floating Elements -->
-                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl float-animation"></div>
-                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-violet-500/20 rounded-full blur-2xl float-animation" style="animation-delay: 2s;"></div>
-                        
-                        <!-- Corner Accents -->
-                        <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-violet-500/50 rounded-tl-2xl"></div>
-                        <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-cyan-500/50 rounded-br-2xl"></div>
+                        <!-- Decorative Ring -->
+                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-violet-500/20 animate-spin" style="animation-duration: 30s;"></div>
                     </div>
                 </div>
 
                 <!-- Right Side - Text Content -->
-                <div data-aos="fade-left">
-                    <div class="gradient-border rounded-3xl p-6 md:p-8 lg:p-10 backdrop-blur-sm hover:border-violet-500/40 transition-all duration-300">
-                        <div class="prose prose-invert prose-lg max-w-none">
-                            <div class="text-gray-300 leading-relaxed space-y-4">
-                                {!! $settings['about_description'] !!}
+                <div class="lg:col-span-3" data-aos="fade-left">
+                    <div class="about-text-container gradient-border rounded-3xl p-6 md:p-8 lg:p-10 backdrop-blur-sm card-hover">
+                        <div class="space-y-4 md:space-y-6">
+                            <div class="text-gray-300 leading-relaxed text-base md:text-lg">
+                                @if($settings['about_description'])
+                                    {!! $settings['about_description'] !!}
+                                @else
+                                    <p class="mb-4">
+                                        I'm a passionate Full Stack Developer with expertise in building modern web applications. 
+                                        I love creating clean, efficient, and user-friendly solutions.
+                                    </p>
+                                    <p class="mb-4">
+                                        With experience in Laravel, React, Vue.js, and mobile development with Flutter, 
+                                        I bring ideas to life through code and creativity.
+                                    </p>
+                                    <p>
+                                        When I'm not coding, you can find me exploring new technologies, 
+                                        contributing to open source projects, or sharing knowledge with the developer community.
+                                    </p>
+                                @endif
+                            </div>
+                            
+                            <!-- Skills Tags -->
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="px-3 py-1 bg-violet-600/20 text-violet-300 rounded-full text-sm border border-violet-500/30">Laravel</span>
+                                <span class="px-3 py-1 bg-indigo-600/20 text-indigo-300 rounded-full text-sm border border-indigo-500/30">Flutter</span>
+                                <span class="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm border border-purple-500/30">UI/UX</span>
                             </div>
                         </div>
                     </div>
