@@ -18,10 +18,23 @@
         }
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
+            max-width: 100vw;
         }
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
             background-attachment: fixed;
+            overflow-x: hidden;
+            max-width: 100vw;
+            position: relative;
+        }
+        
+        /* Prevent Horizontal Scroll */
+        * {
+            max-width: 100%;
+        }
+        
+        .container-custom {
             overflow-x: hidden;
         }
         
@@ -107,13 +120,38 @@
             opacity: 0.5;
         }
         
-        /* Float Animation */
+        /* Float Animation - Enhanced */
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px); 
+            }
+            25% {
+                transform: translateY(-15px) translateX(10px);
+            }
+            50% { 
+                transform: translateY(-25px) translateX(0px); 
+            }
+            75% {
+                transform: translateY(-15px) translateX(-10px);
+            }
         }
         .float-animation {
-            animation: float 6s ease-in-out infinite;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        /* Glow Animation for Elements */
+        @keyframes glow-rotate {
+            0% {
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+                transform: rotate(0deg);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(6, 182, 212, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+                transform: rotate(360deg);
+            }
         }
         
         /* Profile Image Hover - SUPER KEREN! */
@@ -210,12 +248,98 @@
             }
         }
         .gradient-text {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background: linear-gradient(90deg, #667eea 0%, #06b6d4 50%, #667eea 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: shimmer 3s linear infinite;
+        }
+        
+        /* Hero Name Text Animation - Smaller */
+        .hero-name-text {
+            position: relative;
+            display: inline-block;
+            text-shadow: 
+                0 0 10px rgba(102, 126, 234, 0.3),
+                0 0 20px rgba(102, 126, 234, 0.2);
+            animation: glow-pulse-text 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow-pulse-text {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(102, 126, 234, 0.3),
+                    0 0 20px rgba(102, 126, 234, 0.2);
+            }
+            50% {
+                text-shadow: 
+                    0 0 15px rgba(102, 126, 234, 0.5),
+                    0 0 25px rgba(102, 126, 234, 0.3),
+                    0 0 35px rgba(6, 182, 212, 0.2);
+            }
+        }
+        
+        /* Profile Image Hero - Floating Animation */
+        .profile-image-hero {
+            animation: float-gentle 6s ease-in-out infinite;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .profile-image-hero:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+        }
+        
+        .profile-image-hero img {
+            transition: transform 0.7s ease;
+        }
+        
+        .profile-image-hero:hover img {
+            transform: scale(1.15);
+        }
+        
+        @keyframes float-gentle {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(-2deg);
+            }
+        }
+        
+        /* About Image Container - Tilt on Hover */
+        .about-image-container {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .about-image-container:hover {
+            transform: scale(1.05) rotateY(5deg) rotateX(5deg);
+            box-shadow: 
+                0 25px 50px rgba(102, 126, 234, 0.3),
+                0 0 50px rgba(6, 182, 212, 0.2);
+        }
+        
+        .about-image-container img {
+            transition: transform 0.7s ease;
+        }
+        
+        .about-image-container:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
         }
         
         /* Slide In Animations */
@@ -281,11 +405,72 @@
             height: 300px;
         }
         
-        /* Responsive Typography */
+        /* Responsive Typography - Improved */
         @media (max-width: 640px) {
-            h1 { font-size: 2.5rem !important; }
-            h2 { font-size: 2rem !important; }
+            h1 { 
+                font-size: 2rem !important; 
+                line-height: 1.2 !important;
+            }
+            h2 { font-size: 1.75rem !important; }
             h3 { font-size: 1.5rem !important; }
+            
+            .hero-name-text {
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            #typing-role {
+                font-size: 1.5rem !important;
+            }
+            
+            .profile-image-hero {
+                width: 120px !important;
+                height: 120px !important;
+            }
+        }
+        
+        @media (min-width: 641px) and (max-width: 768px) {
+            .hero-name-text {
+                font-size: 2.5rem !important;
+            }
+            
+            #typing-role {
+                font-size: 1.75rem !important;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-name-text {
+                font-size: 3rem !important;
+            }
+            
+            #typing-role {
+                font-size: 2rem !important;
+            }
+        }
+        
+        /* Fix Horizontal Scroll on All Devices */
+        @media (max-width: 1024px) {
+            .container-custom {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            section {
+                overflow-x: hidden !important;
+            }
+            
+            .about-image-container {
+                max-width: 100% !important;
+            }
+        }
+        
+        /* Tablet Specific */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .container-custom {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
         }
         
         /* Perfect Scrollbar */
@@ -351,103 +536,88 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Premium Modern with Typing Animation -->
+    <!-- Hero Section - Centered Design with Particles -->
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div class="container-custom w-full py-12 md:py-16 lg:py-20">
-            <!-- Animated Background Elements -->
-            <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl float-animation"></div>
-                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
-            </div>
+        <!-- Animated Particles Background -->
+        <div id="particles-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+        
+        <!-- Gradient Background Blobs -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl float-animation"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl float-animation" style="animation-delay: 4s;"></div>
+        </div>
 
-            <div class="relative z-10">
-                <div class="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center">
-                    <!-- Left Content - Text dengan Spacing Rapih -->
-                    <div class="text-center lg:text-left px-4 md:px-6 lg:px-0" data-aos="fade-right">
-                        <!-- Welcome Badge -->
-                        <div class="inline-block mb-6 md:mb-8">
-                            <span class="px-5 py-2.5 rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/30 text-sm md:text-base font-medium backdrop-blur-sm inline-flex items-center gap-2">
-                                <span class="text-2xl">👋</span>
-                                <span>Welcome to my portfolio</span>
-                            </span>
-                        </div>
+        <div class="container-custom w-full py-12 md:py-16 lg:py-20 relative z-10">
+            <!-- Centered Content -->
+            <div class="text-center max-w-5xl mx-auto px-4 sm:px-6" data-aos="fade-up">
+                <!-- Profile Image - Animated -->
+                <div class="mb-8 md:mb-10 flex justify-center" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48">
+                        <!-- Rotating Ring -->
+                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-violet-500/30 animate-spin" style="animation-duration: 20s;"></div>
                         
-                        <!-- Main Heading dengan Typing Effect -->
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight">
-                            <span class="block text-white mb-2">Hi, I'm</span>
-                            <span class="block gradient-text mb-2" id="typing-name">Abdurrohman</span>
-                            <span class="block text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-2">a</span>
-                            <span class="block gradient-text" id="typing-role">Full Stack Developer</span>
-                        </h1>
+                        <!-- Glow Background -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full blur-xl opacity-30 animate-pulse"></div>
                         
-                        <!-- Subtitle dengan Typing Effect -->
-                        <div class="mb-10 md:mb-12">
-                            <p class="text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 min-h-[4rem] md:min-h-[5rem]" id="typing-subtitle">
-                                {{ $settings['hero_subtitle'] ?? 'Creating modern web & mobile apps with Laravel, Dart, Flutter, Tailwind, and JavaScript.' }}
-                            </p>
-                        </div>
-                        
-                        <!-- CTA Buttons dengan Spacing Rapih -->
-                        <div class="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-5 justify-center lg:justify-start">
-                            <a href="#projects" class="group px-8 md:px-10 py-4 md:py-5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl font-semibold text-base md:text-lg hover:from-violet-500 hover:to-indigo-500 transition-all duration-300 glow-effect flex items-center justify-center gap-3 btn-hover">
-                                <span>View Projects</span>
-                                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </a>
-                            @if($settings['cv_file'])
-                            <a href="{{ route('cv.download') }}" class="px-8 md:px-10 py-4 md:py-5 rounded-2xl font-semibold text-base md:text-lg border-2 border-white/10 hover:border-violet-500/50 hover:bg-white/5 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-3 btn-hover">
-                                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                <span>Download CV</span>
-                            </a>
+                        <!-- Image Container with Hover -->
+                        <div class="profile-image-hero relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 shadow-2xl cursor-pointer">
+                            @if($settings['profile_image'])
+                                <img src="{{ Storage::url($settings['profile_image']) }}" alt="Profile" class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white/50" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
                             @endif
                         </div>
-                    </div>
 
-                    <!-- Right Content - Profile Image dengan Hover Effect Keren -->
-                    <div class="flex justify-center lg:justify-end px-4 md:px-6 lg:px-0" data-aos="fade-left" data-aos-delay="200">
-                        <div class="relative w-full max-w-md lg:max-w-lg">
-                            <!-- Animated Glow Background -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-                            
-                            <!-- Image Container dengan Hover Effect Premium -->
-                            <div class="profile-image-container relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] mx-auto rounded-full overflow-hidden border-4 border-white/10 shadow-2xl cursor-pointer">
-                                @if($settings['profile_image'])
-                                    <img src="{{ Storage::url($settings['profile_image']) }}" alt="Profile" class="w-full h-full object-cover transition-all duration-700 hover:scale-110 hover:rotate-2">
-                                @else
-                                    <div class="w-full h-full bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
-                                        <svg class="w-32 h-32 md:w-40 md:h-40 text-white/50" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </div>
-                                @endif
-                                
-                                <!-- Overlay Gradient on Hover -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-violet-600/30 via-transparent to-indigo-600/30 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-                                
-                                <!-- Hover Info Overlay -->
-                                <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 bg-slate-900/80 backdrop-blur-sm">
-                                    <div class="text-center p-6">
-                                        <p class="text-white text-xl md:text-2xl font-bold mb-2">Let's Connect!</p>
-                                        <p class="text-gray-300 text-sm md:text-base">Click to view more</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Decorative Floating Elements -->
-                            <div class="absolute -top-6 -right-6 w-24 h-24 md:w-28 md:h-28 bg-violet-600/30 rounded-full blur-2xl float-animation"></div>
-                            <div class="absolute -bottom-6 -left-6 w-28 h-28 md:w-36 md:h-36 bg-indigo-600/30 rounded-full blur-2xl float-animation" style="animation-delay: 2s;"></div>
-                            
-                            <!-- Rotating Ring -->
-                            <div class="absolute inset-0 rounded-full border-2 border-dashed border-violet-500/20 animate-spin pointer-events-none" style="animation-duration: 20s;"></div>
-                            
-                            <!-- Orbiting Dots -->
-                            <div class="absolute top-1/4 -left-4 w-4 h-4 bg-violet-500 rounded-full animate-ping"></div>
-                            <div class="absolute bottom-1/4 -right-4 w-3 h-3 bg-indigo-500 rounded-full animate-ping" style="animation-delay: 1s;"></div>
-                        </div>
+                        <!-- Orbiting Dots -->
+                        <div class="absolute top-0 left-1/2 w-3 h-3 bg-violet-500 rounded-full animate-ping"></div>
+                        <div class="absolute bottom-0 right-1/2 w-2 h-2 bg-cyan-500 rounded-full animate-ping" style="animation-delay: 1s;"></div>
                     </div>
+                </div>
+
+                <!-- Main Name - Moderate Size -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight" data-aos="fade-up" data-aos-delay="300">
+                    <span class="block text-white hero-name-text">
+                      {{ $settings['hero_title'] ?? 'Abdurrohman' }}
+                    </span>
+                </h1>
+                
+                <!-- Subtitle with Typing Animation -->
+                <div class="mb-8 md:mb-10" data-aos="fade-up" data-aos-delay="400">
+                    <p class="text-lg sm:text-xl md:text-2xl text-gray-300 font-light mb-3">
+                        Saya Seorang
+                    </p>
+                    <div class="min-h-[2.5rem] md:min-h-[3rem]">
+                        <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold gradient-text" id="typing-role">
+                            Full Stack Developer
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Description -->
+                <p class="text-sm sm:text-base md:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-8 md:mb-10" data-aos="fade-up" data-aos-delay="500">
+                    {{ $settings['hero_subtitle'] ?? 'Kreator digital yang mengubah ide menjadi karya inovatif dengan teknologi mutakhir dan kreativitas tanpa batas.' }}
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="600">
+                    <a href="#projects" class="group w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-xl font-semibold text-sm md:text-base hover:from-violet-500 hover:to-indigo-500 transition-all duration-300 glow-effect flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        <span>LIHAT KARYA</span>
+                    </a>
+                    <a href="#contact" class="group w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-sm md:text-base border-2 border-cyan-500/50 hover:border-cyan-400 hover:bg-cyan-500/10 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>HUBUNGI SAYA</span>
+                    </a>
                 </div>
             </div>
 
@@ -455,7 +625,7 @@
             <div class="absolute bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
                 <div class="flex flex-col items-center gap-2">
                     <span class="text-gray-400 text-xs md:text-sm font-medium">Scroll Down</span>
-                    <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                     </svg>
                 </div>
@@ -463,9 +633,9 @@
         </div>
     </section>
 
-    <!-- About Section - Premium Modern -->
+    <!-- About Section - With Image on Left -->
     @if($settings['about_description'])
-    <section id="about" class="py-20 md:py-28 lg:py-32 relative">
+    <section id="about" class="py-20 md:py-28 lg:py-32 relative overflow-hidden">
         <div class="container-custom">
             <!-- Section Header -->
             <div class="text-center mb-16" data-aos="fade-up">
@@ -477,11 +647,48 @@
                 </h2>
             </div>
 
-            <!-- Content -->
-            <div class="gradient-border rounded-3xl p-6 md:p-10 lg:p-12 backdrop-blur-sm" data-aos="fade-up" data-aos-delay="100">
-                <div class="prose prose-invert prose-lg max-w-none">
-                    <div class="text-gray-300 leading-relaxed space-y-4">
-                        {!! $settings['about_description'] !!}
+            <!-- Content with Image -->
+            <div class="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+                <!-- Left Side - Profile Image (Always First) -->
+                <div data-aos="fade-right">
+                    <div class="relative max-w-md mx-auto lg:ml-0">
+                        <!-- Animated Glow Background -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
+                        
+                        <!-- Image Container with Hover Animation -->
+                        <div class="about-image-container relative rounded-3xl overflow-hidden border-4 border-white/10 shadow-2xl">
+                            @if($settings['profile_image'])
+                                <img src="{{ Storage::url($settings['profile_image']) }}" alt="About Me" class="w-full h-auto object-cover transition-transform duration-700">
+                            @else
+                                <div class="w-full aspect-square bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center">
+                                    <svg class="w-32 h-32 text-white/50" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            @endif
+                            
+                            <!-- Overlay on Hover -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-violet-600/30 via-transparent to-cyan-500/30 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+
+                        <!-- Decorative Floating Elements -->
+                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl float-animation"></div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-violet-500/20 rounded-full blur-2xl float-animation" style="animation-delay: 2s;"></div>
+                        
+                        <!-- Corner Accents -->
+                        <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-violet-500/50 rounded-tl-2xl"></div>
+                        <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-cyan-500/50 rounded-br-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Text Content -->
+                <div data-aos="fade-left">
+                    <div class="gradient-border rounded-3xl p-6 md:p-8 lg:p-10 backdrop-blur-sm hover:border-violet-500/40 transition-all duration-300">
+                        <div class="prose prose-invert prose-lg max-w-none">
+                            <div class="text-gray-300 leading-relaxed space-y-4">
+                                {!! $settings['about_description'] !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1055,36 +1262,16 @@
             }
         }
 
-        // Typing Animation untuk Role
+        // Typing Animation untuk Role - 3 Roles Only
         document.addEventListener('DOMContentLoaded', () => {
             const roleElement = document.getElementById('typing-role');
             if (roleElement) {
                 const roles = [
                     'Full Stack Developer',
-                    'Laravel Expert',
-                    'Flutter Developer',
-                    'UI/UX Enthusiast',
-                    'Problem Solver'
+                    'UI/UX Designer',
+                    'Mobile Developer'
                 ];
-                new TypeWriter(roleElement, roles, 2000);
-            }
-
-            // Typing Animation untuk Subtitle (sekali saja)
-            const subtitleElement = document.getElementById('typing-subtitle');
-            if (subtitleElement) {
-                const originalText = subtitleElement.textContent;
-                subtitleElement.textContent = '';
-                let charIndex = 0;
-
-                function typeSubtitle() {
-                    if (charIndex < originalText.length) {
-                        subtitleElement.textContent += originalText.charAt(charIndex);
-                        charIndex++;
-                        setTimeout(typeSubtitle, 30);
-                    }
-                }
-
-                setTimeout(typeSubtitle, 500);
+                new TypeWriter(roleElement, roles, 2500);
             }
         });
 
@@ -1192,34 +1379,64 @@
         // createCursorTrail();
 
         // ============================================
-        // PARTICLE BACKGROUND (Optional)
+        // PARTICLE BACKGROUND - ACTIVE
         // ============================================
         
         const createParticles = () => {
-            const heroSection = document.getElementById('home');
-            if (!heroSection) return;
+            const container = document.getElementById('particles-container');
+            if (!container) return;
 
-            for (let i = 0; i < 30; i++) {
+            // Create 50 particles
+            for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 1;
+                const colors = [
+                    'rgba(102, 126, 234, 0.6)',
+                    'rgba(6, 182, 212, 0.6)',
+                    'rgba(139, 92, 246, 0.6)',
+                    'rgba(118, 75, 162, 0.6)'
+                ];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
                 particle.style.cssText = `
-                    position: absolute;
-                    width: ${Math.random() * 4 + 2}px;
-                    height: ${Math.random() * 4 + 2}px;
-                    background: rgba(139, 92, 246, ${Math.random() * 0.5 + 0.2});
-                    border-radius: 50%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
                     left: ${Math.random() * 100}%;
                     top: ${Math.random() * 100}%;
-                    pointer-events: none;
-                    animation: float ${Math.random() * 10 + 5}s ease-in-out infinite;
+                    animation: float ${Math.random() * 10 + 10}s ease-in-out infinite;
                     animation-delay: ${Math.random() * 5}s;
+                    box-shadow: 0 0 ${size * 2}px ${color};
                 `;
-                heroSection.appendChild(particle);
+                container.appendChild(particle);
             }
+
+            // Create connecting lines
+            setInterval(() => {
+                const particles = container.querySelectorAll('.particle');
+                particles.forEach((p1, i) => {
+                    particles.forEach((p2, j) => {
+                        if (i < j) {
+                            const rect1 = p1.getBoundingClientRect();
+                            const rect2 = p2.getBoundingClientRect();
+                            const distance = Math.hypot(
+                                rect1.left - rect2.left,
+                                rect1.top - rect2.top
+                            );
+                            
+                            if (distance < 150) {
+                                // Draw line logic here if needed
+                            }
+                        }
+                    });
+                });
+            }, 100);
         };
 
-        // Uncomment untuk mengaktifkan particles
-        // createParticles();
+        // Activate particles
+        createParticles();
 
         // ============================================
         // SCROLL REVEAL COUNTER ANIMATION
