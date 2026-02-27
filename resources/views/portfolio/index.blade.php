@@ -470,9 +470,17 @@
                 font-size: 1.5rem !important;
             }
             
+            /* Profile image hero size */
             .profile-image-hero {
-                width: 120px !important;
-                height: 120px !important;
+                width: 80% !important;
+                height: 80% !important;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .profile-image-hero-container {
+                width: 200px !important;
+                height: 200px !important;
             }
         }
         
@@ -507,7 +515,7 @@
                 overflow-x: hidden !important;
             }
             
-            .about-image-circular {
+            .about-image-circular, .profile-image-hero-container {
                 width: 200px !important;
                 height: 200px !important;
             }
@@ -515,7 +523,7 @@
         
         /* Mobile Specific */
         @media (max-width: 640px) {
-            .about-image-circular {
+            .about-image-circular, .profile-image-hero-container {
                 width: 180px !important;
                 height: 180px !important;
             }
@@ -537,7 +545,7 @@
                 padding-right: 1.5rem !important;
             }
             
-            .about-image-circular {
+            .about-image-circular, .profile-image-hero-container {
                 width: 240px !important;
                 height: 240px !important;
             }
@@ -630,7 +638,7 @@
             <div class="text-center max-w-5xl mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <!-- Profile Image - Animated -->
                 <div class="mb-8 md:mb-10 flex justify-center" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48">
+                    <div class="profile-image-hero-container relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-96 lg:h-96">
                         <!-- Rotating Ring -->
                         <div class="absolute inset-0 rounded-full border-2 border-dashed border-violet-500/30 animate-spin" style="animation-duration: 20s;"></div>
                         
