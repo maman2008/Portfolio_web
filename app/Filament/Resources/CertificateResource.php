@@ -27,9 +27,13 @@ class CertificateResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull()
-                    ->placeholder('Certificate Name'),
+                    ->maxLength(100)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->maxLength(100)
+                    ->unique(ignoreRecord: true),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->required()
@@ -40,6 +44,9 @@ class CertificateResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->placeholder('Issuing Organization'),
+                Forms\Components\RichEditor::make('description')
+                    ->columnSpanFull()
+                    ->placeholder('Describe what you learned or achieved'),
                 Forms\Components\TextInput::make('year')
                     ->required()
                     ->numeric()

@@ -47,6 +47,7 @@ class PortfolioSeeder extends Seeder
         // Experiences
         Experience::create([
             'title' => 'Tech Company',
+            'slug' => 'tech-company',
             'position' => 'Senior Full Stack Developer',
             'description' => 'Led development of multiple web applications using Laravel and Vue.js. Managed a team of 5 developers.',
             'start_year' => 2020,
@@ -57,6 +58,7 @@ class PortfolioSeeder extends Seeder
 
         Experience::create([
             'title' => 'Startup Inc',
+            'slug' => 'startup-inc',
             'position' => 'Full Stack Developer',
             'description' => 'Developed and maintained various web applications. Worked with Laravel, React, and MySQL.',
             'start_year' => 2018,
@@ -65,26 +67,28 @@ class PortfolioSeeder extends Seeder
             'order' => 2,
         ]);
 
-        // Projects (Note: Add images via admin panel)
-        // Project::create([
-        //     'name' => 'E-Commerce Platform',
-        //     'main_image' => 'projects/demo.jpg',
-        //     'description' => '<p>A full-featured e-commerce platform with payment integration, inventory management, and admin dashboard.</p>',
-        //     'technologies' => ['Laravel', 'Vue.js', 'Tailwind CSS', 'MySQL'],
-        //     'demo_link' => 'https://demo.example.com',
-        //     'github_link' => 'https://github.com/username/project',
-        //     'is_featured' => true,
-        //     'order' => 1,
-        // ]);
+        // Projects
+        Project::create([
+            'name' => 'E-Commerce Platform',
+            'slug' => 'e-commerce-platform',
+            'main_image' => 'projects/demo.jpg',
+            'description' => '<p>A full-featured e-commerce platform with payment integration, inventory management, and admin dashboard.</p>',
+            'technologies' => ['Laravel', 'Vue.js', 'Tailwind CSS', 'MySQL'],
+            'demo_link' => 'https://demo.example.com',
+            'github_link' => 'https://github.com/username/project',
+            'is_featured' => true,
+            'order' => 1,
+        ]);
 
-        // Certificates (Note: Add images via admin panel)
-        // Certificate::create([
-        //     'name' => 'Laravel Certified Developer',
-        //     'image' => 'certificates/demo.jpg',
-        //     'issuer' => 'Laravel',
-        //     'year' => 2023,
-        //     'verification_link' => 'https://verify.example.com',
-        //     'order' => 1,
-        // ]);
+        // Certificates
+        Certificate::create([
+            'name' => 'Laravel Certified Developer',
+            'slug' => 'laravel-certified-developer',
+            'image' => 'certificates/demo.jpg',
+            'issuer' => 'Laravel',
+            'year' => 2023,
+            'verification_link' => 'https://verify.example.com',
+            'order' => 1,
+        ]);
     }
 }

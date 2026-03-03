@@ -8,6 +8,7 @@ class Experience extends Model
 {
     protected $fillable = [
         'image',
+        'slug',
         'title',
         'position',
         'description',

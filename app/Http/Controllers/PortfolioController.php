@@ -15,10 +15,11 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        $experiences = Experience::orderBy('order')->orderBy('start_year', 'desc')->get();
-        $projects = Project::orderBy('order')->orderBy('created_at', 'desc')->get();
+        // Limit to 3 items for homepage
+        $experiences = Experience::orderBy('order')->orderBy('start_year', 'desc')->limit(3)->get();
+        $projects = Project::orderBy('order')->orderBy('created_at', 'desc')->limit(3)->get();
         $skills = Skill::orderBy('order')->orderBy('name')->get();
-        $certificates = Certificate::orderBy('order')->orderBy('year', 'desc')->get();
+        $certificates = Certificate::orderBy('order')->orderBy('year', 'desc')->limit(3)->get();
         
         $settings = [
             'hero_title' => Setting::get('hero_title', 'Hi, I\'m a Developer'),
@@ -30,6 +31,45 @@ class PortfolioController extends Controller
         ];
 
         return view('portfolio.index', compact('experiences', 'projects', 'skills', 'certificates', 'settings'));
+    }
+
+    // Projects Pages
+    public function projects()
+    {
+        $projects = Project::orderBy('order')->orderBy('created_at', 'desc')->paginate(9);
+        
+        return view('portfolio.projects', compact('projects'));
+    }
+
+    public function projectDetail(Project $project)
+    {
+        return view('portfolio.project-detail', compact('project'));
+    }
+
+    // Experience Pages
+    public function experience()
+    {
+        $experiences = Experience::orderBy('order')->orderBy('start_year', 'desc')->paginate(12);
+        
+        return view('portfolio.experience', compact('experiences'));
+    }
+
+    public function experienceDetail(Experience $experience)
+    {
+        return view('portfolio.experience-detail', compact('experience'));
+    }
+
+    // Certificates Pages
+    public function certificates()
+    {
+        $certificates = Certificate::orderBy('order')->orderBy('year', 'desc')->paginate(12);
+        
+        return view('portfolio.certificates', compact('certificates'));
+    }
+
+    public function certificateDetail(Certificate $certificate)
+    {
+        return view('portfolio.certificate-detail', compact('certificate'));
     }
 
     public function contact(Request $request)
@@ -54,5 +94,17 @@ class PortfolioController extends Controller
         }
 
         return Storage::disk('public')->download($cvFile, 'CV.pdf');
+    }
+
+    public function downloadCertificate(Certificate $certificate)
+    {
+        if (!$certificate->image || !Storage::disk('public')->exists($certificate->image)) {
+            abort(404, 'Certificate file not found');
+        }
+
+        $extension = pathinfo($certificate->image, PATHINFO_EXTENSION);
+        $filename = \Illuminate\Support\Str::slug($certificate->name) . '.' . $extension;
+
+        return Storage::disk('public')->download($certificate->image, $filename);
     }
 }
